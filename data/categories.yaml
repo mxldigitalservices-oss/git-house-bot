@@ -1,0 +1,19 @@
+# Catálogo de categorías del bot "Git House".
+# Cada slug debe ser único y coincidir con el campo "categoria" usado
+# dentro de los archivos JSON en data/qna/*.json
+categorias:
+  - slug: ventas
+    nombre: "Ventas de Propiedades"
+    descripcion: "Preguntas relacionadas a la compra y venta de casas y apartamentos"
+
+  - slug: alquiler
+    nombre: "Alquiler"
+    descripcion: "Preguntas relacionadas a arrendamiento de propiedades"
+
+  - slug: soporte
+    nombre: "Soporte de la Plataforma"
+    descripcion: "Dudas técnicas sobre el uso de Git House (cuenta, pagos, publicaciones)"
+
+  - slug: general
+    nombre: "Información General"
+    descripcion: "Preguntas frecuentes generales sobre la empresa y el servicio"

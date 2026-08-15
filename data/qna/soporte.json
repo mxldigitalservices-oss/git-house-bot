@@ -1,0 +1,36 @@
+{
+  "categoria": "soporte",
+  "preguntas": [
+    {
+      "id": "soporte_001",
+      "pregunta": "Olvidé mi contraseña, ¿cómo la recupero?",
+      "palabras_clave": ["contraseña", "clave", "recuperar", "olvide", "acceso"],
+      "variantes": [
+        "no puedo entrar a mi cuenta",
+        "cómo cambio mi contraseña",
+        "perdí el acceso a mi cuenta"
+      ],
+      "respuestas": [
+        {
+          "tipo": "texto",
+          "contenido": "En la pantalla de inicio de sesión toca '¿Olvidaste tu contraseña?' e ingresa tu correo. Te enviaremos un enlace para restablecerla."
+        }
+      ]
+    },
+    {
+      "id": "soporte_002",
+      "pregunta": "¿Cómo edito o elimino una publicación?",
+      "palabras_clave": ["editar", "eliminar", "borrar", "modificar publicación"],
+      "variantes": [
+        "quiero borrar mi anuncio",
+        "cómo cambio los datos de mi propiedad publicada"
+      ],
+      "respuestas": [
+        {
+          "tipo": "texto",
+          "contenido": "Ve a 'Mis Propiedades', selecciona la publicación y usa los botones 'Editar' o 'Eliminar' en la parte superior de la ficha."
+        }
+      ]
+    }
+  ]
+}

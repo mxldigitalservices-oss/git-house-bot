@@ -1,0 +1,36 @@
+{
+  "categoria": "alquiler",
+  "preguntas": [
+    {
+      "id": "alquiler_001",
+      "pregunta": "¿Cómo alquilo una propiedad en Git House?",
+      "palabras_clave": ["alquilar", "rentar", "arrendar", "buscar apartamento"],
+      "variantes": [
+        "quiero rentar un apartamento",
+        "cómo busco casas en alquiler",
+        "necesito arrendar una vivienda"
+      ],
+      "respuestas": [
+        {
+          "tipo": "texto",
+          "contenido": "Usa el buscador de la página principal, filtra por zona y presupuesto, y contacta directamente al propietario desde la ficha de la propiedad."
+        }
+      ]
+    },
+    {
+      "id": "alquiler_002",
+      "pregunta": "¿Piden depósito para alquilar?",
+      "palabras_clave": ["deposito", "garantia", "mes adelantado", "fianza"],
+      "variantes": [
+        "cuánto es el depósito de garantía",
+        "hay que dar fianza para rentar"
+      ],
+      "respuestas": [
+        {
+          "tipo": "texto",
+          "contenido": "Depende del propietario, pero lo habitual es un depósito equivalente a un mes de alquiler más el primer mes por adelantado."
+        }
+      ]
+    }
+  ]
+}

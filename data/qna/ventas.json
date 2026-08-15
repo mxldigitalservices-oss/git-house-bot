@@ -1,0 +1,57 @@
+{
+  "categoria": "ventas",
+  "preguntas": [
+    {
+      "id": "ventas_001",
+      "pregunta": "¿Cómo puedo publicar una propiedad en venta?",
+      "palabras_clave": ["publicar", "vender", "propiedad", "listar", "casa en venta"],
+      "variantes": [
+        "quiero vender mi casa",
+        "cómo subo mi propiedad a la plataforma",
+        "necesito publicar un inmueble en venta"
+      ],
+      "respuestas": [
+        {
+          "tipo": "texto",
+          "contenido": "Puedes publicar tu propiedad desde tu panel en 'Mis Propiedades' > 'Nueva Publicación'. Solo necesitas fotos, dirección y precio."
+        },
+        {
+          "tipo": "link",
+          "contenido": "Ir a Mis Propiedades",
+          "meta": { "url": "https://githouse.app/panel/propiedades/nueva" }
+        }
+      ]
+    },
+    {
+      "id": "ventas_002",
+      "pregunta": "¿Cuánto cuesta publicar una propiedad?",
+      "palabras_clave": ["costo", "precio", "comisión", "cuanto cuesta", "tarifa"],
+      "variantes": [
+        "cuál es la comisión por vender",
+        "cobran por publicar",
+        "tiene costo listar mi casa"
+      ],
+      "respuestas": [
+        {
+          "tipo": "texto",
+          "contenido": "Publicar es gratis. Git House solo cobra una comisión del 3% sobre el valor final de la venta, una vez cerrado el negocio."
+        }
+      ]
+    },
+    {
+      "id": "ventas_003",
+      "pregunta": "¿Qué documentos necesito para vender mi propiedad?",
+      "palabras_clave": ["documentos", "papeles", "requisitos", "titulo", "certificado"],
+      "variantes": [
+        "qué papeles piden para vender",
+        "requisitos legales para vender una casa"
+      ],
+      "respuestas": [
+        {
+          "tipo": "texto",
+          "contenido": "Necesitas el título de propiedad o certificado de título, cédula del propietario, y certificación de no gravamen actualizada."
+        }
+      ]
+    }
+  ]
+}

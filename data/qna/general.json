@@ -1,0 +1,35 @@
+{
+  "categoria": "general",
+  "preguntas": [
+    {
+      "id": "general_001",
+      "pregunta": "¿Qué es Git House?",
+      "palabras_clave": ["que es", "git house", "empresa", "plataforma"],
+      "variantes": [
+        "de qué trata git house",
+        "quiénes son ustedes"
+      ],
+      "respuestas": [
+        {
+          "tipo": "texto",
+          "contenido": "Git House es una plataforma para publicar, buscar, comprar, vender y alquilar propiedades de forma directa entre usuarios."
+        }
+      ]
+    },
+    {
+      "id": "general_002",
+      "pregunta": "¿Cómo contacto a soporte humano?",
+      "palabras_clave": ["contacto", "soporte", "hablar con alguien", "humano", "asesor"],
+      "variantes": [
+        "quiero hablar con una persona",
+        "cómo escribo a servicio al cliente"
+      ],
+      "respuestas": [
+        {
+          "tipo": "texto",
+          "contenido": "Puedes escribirnos a soporte@githouse.app o por WhatsApp al número que aparece en el pie de página de la app."
+        }
+      ]
+    }
+  ]
+}
