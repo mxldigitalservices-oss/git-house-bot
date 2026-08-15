@@ -119,7 +119,7 @@ def cargar_datos(db: Session) -> LoadLog:
                 )
             for q_data in bloque.get("preguntas", []):
                 pregunta = _upsert_pregunta(db, categoria, q_data)
-                log.preguntas_procesadas += 1
+                log.preguntas_procesadas  = (
                 log.respuestas_procesadas += len(q_data.get("respuestas", []))
 
         db.commit()
