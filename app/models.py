@@ -15,6 +15,7 @@ from sqlalchemy import (
     JSON,
     Boolean,
     DateTime,
+    Float,
     ForeignKey,
     Integer,
     String,
@@ -166,4 +167,34 @@ class Contact(Base):
     creado_en: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utcnow)
     ultima_interaccion: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=_utcnow
+    )
+
+
+class Property(Base):
+    """
+    Inventario de propiedades — vive 100% en esta tabla de Postgres.
+    Agregar la propiedad #6, #15 o #20 es insertar una fila nueva vía
+    la API (/propiedades), sin tocar código, sin JSON y sin redeploy.
+    """
+
+    __tablename__ = "properties"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    titulo: Mapped[str] = mapped_column(String(200), nullable=False)
+    # "venta" | "alquiler"
+    tipo: Mapped[str] = mapped_column(String(20), nullable=False, index=True)
+    # sector/zona (ej. "Alma Rosa Primera") — el buscador del bot detecta
+    # dinámicamente qué zonas existen consultando esta misma tabla, así
+    # que no hay una lista fija de sectores en el código.
+    zona: Mapped[str] = mapped_column(String(120), nullable=False, index=True)
+    precio: Mapped[float] = mapped_column(Float, nullable=False)
+    habitaciones: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    banos: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    area_m2: Mapped[float | None] = mapped_column(Float, nullable=True)
+    descripcion: Mapped[str | None] = mapped_column(Text, nullable=True)
+    # "disponible" | "reservada" | "vendida" | "alquilada"
+    estado: Mapped[str] = mapped_column(String(20), default="disponible", index=True)
+    creado_en: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utcnow)
+    actualizado_en: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=_utcnow, onupdate=_utcnow
     )

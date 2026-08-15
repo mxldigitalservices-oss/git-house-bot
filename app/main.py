@@ -21,7 +21,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.database import SessionLocal, engine
 from app.loader import DataLoadError, cargar_datos
 from app.models import Base
-from app.routers import admin, categories, chat, health, whatsapp
+from app.routers import admin, categories, chat, health, properties, whatsapp
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("githouse.main")
@@ -69,6 +69,7 @@ app.include_router(health.router)
 app.include_router(categories.router)
 app.include_router(chat.router)
 app.include_router(admin.router)
+app.include_router(properties.router)
 app.include_router(whatsapp.router)
 
 

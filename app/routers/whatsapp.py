@@ -39,6 +39,7 @@ from app.handover import (
     solicita_agente_humano,
 )
 from app.matcher import buscar_mejor_coincidencia
+from app.properties import buscar_propiedades, formatear_propiedades
 from app.utils import normalizar_telefono
 
 router = APIRouter(prefix="/whatsapp", tags=["WhatsApp"])
@@ -65,8 +66,8 @@ class WhatsAppWebhookOut(BaseModel):
     respuesta_enviada: str | None = None
 
 
-def _texto_respuesta_bot(db: Session, mensaje_usuario: str) -> str:
-    """Reutiliza el matcher del bot (el mismo que usa /chat/consultar)."""
+def _respuesta_qna(db: Session, mensaje_usuario: str) -> str:
+    """Preguntas frecuentes de política/soporte (mismo matcher de /chat/consultar)."""
     candidatos = buscar_mejor_coincidencia(db, mensaje_usuario)
 
     if not candidatos:
@@ -82,6 +83,19 @@ def _texto_respuesta_bot(db: Session, mensaje_usuario: str) -> str:
         return "\n\n".join(partes)
 
     return "No estoy seguro de haber entendido bien. ¿Puedes reformular tu pregunta?"
+
+
+def _generar_respuesta(db: Session, mensaje_usuario: str) -> str:
+    """
+    Primero prueba contra el inventario real (tabla `properties`, 100%
+    Postgres — cero llamadas externas). Si el mensaje calza con zona/tipo
+    de alguna propiedad disponible, responde con esas opciones. Si no,
+    cae al Q&A general de política/soporte.
+    """
+    propiedades = buscar_propiedades(db, mensaje_usuario)
+    if propiedades:
+        return "Encontré estas opciones disponibles:\n\n" + formatear_propiedades(propiedades)
+    return _respuesta_qna(db, mensaje_usuario)
 
 
 async def _enviar_whatsapp(phone: str, texto: str) -> dict:
@@ -198,7 +212,7 @@ async def whatsapp_webhook(data: WhatsAppMessageIn, db: Session = Depends(get_db
 
     # 5) Flujo normal: responde el bot usando el motor de matching,
     #    reconociendo al usuario por nombre si es una sesión nueva.
-    texto_respuesta = _texto_respuesta_bot(db, data.message)
+    texto_respuesta = _generar_respuesta(db, data.message)
     if saludar_de_nuevo:
         texto_respuesta = f"¡Hola de nuevo, {contacto.nombre}! 👋\n\n{texto_respuesta}"
 

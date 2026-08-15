@@ -1,4 +1,7 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
+
+TIPOS_VALIDOS = {"venta", "alquiler"}
+ESTADOS_VALIDOS = {"disponible", "reservada", "vendida", "alquilada"}
 
 
 class AnswerOut(BaseModel):
@@ -71,6 +74,84 @@ class HandoverOut(BaseModel):
 class ContactOut(BaseModel):
     phone: str
     nombre: str | None = None
+
+    class Config:
+        from_attributes = True
+
+
+class PropertyIn(BaseModel):
+    titulo: str = Field(..., min_length=1, max_length=200)
+    tipo: str = Field(..., description="'venta' o 'alquiler'")
+    zona: str = Field(..., min_length=1, max_length=120)
+    precio: float = Field(..., gt=0)
+    habitaciones: int | None = Field(default=None, ge=0)
+    banos: int | None = Field(default=None, ge=0)
+    area_m2: float | None = Field(default=None, gt=0)
+    descripcion: str | None = None
+    estado: str = "disponible"
+
+    @field_validator("tipo")
+    @classmethod
+    def _validar_tipo(cls, v: str) -> str:
+        v = v.strip().lower()
+        if v not in TIPOS_VALIDOS:
+            raise ValueError(f"tipo debe ser uno de {sorted(TIPOS_VALIDOS)}")
+        return v
+
+    @field_validator("estado")
+    @classmethod
+    def _validar_estado(cls, v: str) -> str:
+        v = v.strip().lower()
+        if v not in ESTADOS_VALIDOS:
+            raise ValueError(f"estado debe ser uno de {sorted(ESTADOS_VALIDOS)}")
+        return v
+
+
+class PropertyUpdate(BaseModel):
+    """Todos los campos opcionales: solo se actualiza lo que se envíe."""
+
+    titulo: str | None = Field(default=None, min_length=1, max_length=200)
+    tipo: str | None = None
+    zona: str | None = Field(default=None, min_length=1, max_length=120)
+    precio: float | None = Field(default=None, gt=0)
+    habitaciones: int | None = Field(default=None, ge=0)
+    banos: int | None = Field(default=None, ge=0)
+    area_m2: float | None = Field(default=None, gt=0)
+    descripcion: str | None = None
+    estado: str | None = None
+
+    @field_validator("tipo")
+    @classmethod
+    def _validar_tipo(cls, v: str | None) -> str | None:
+        if v is None:
+            return v
+        v = v.strip().lower()
+        if v not in TIPOS_VALIDOS:
+            raise ValueError(f"tipo debe ser uno de {sorted(TIPOS_VALIDOS)}")
+        return v
+
+    @field_validator("estado")
+    @classmethod
+    def _validar_estado(cls, v: str | None) -> str | None:
+        if v is None:
+            return v
+        v = v.strip().lower()
+        if v not in ESTADOS_VALIDOS:
+            raise ValueError(f"estado debe ser uno de {sorted(ESTADOS_VALIDOS)}")
+        return v
+
+
+class PropertyOut(BaseModel):
+    id: int
+    titulo: str
+    tipo: str
+    zona: str
+    precio: float
+    habitaciones: int | None = None
+    banos: int | None = None
+    area_m2: float | None = None
+    descripcion: str | None = None
+    estado: str
 
     class Config:
         from_attributes = True
