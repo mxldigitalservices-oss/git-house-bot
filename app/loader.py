@@ -119,14 +119,14 @@ def cargar_datos(db: Session) -> LoadLog:
                 )
             for q_data in bloque.get("preguntas", []):
                 pregunta = _upsert_pregunta(db, categoria, q_data)
-                log.preguntas_procesadas  = (
+    log.preguntas_procesadas = (log.preguntas_procesadas if log.preguntas_procesadas is not None else 0) + 1
                 log.respuestas_procesadas += len(q_data.get("respuestas", []))
 
         db.commit()
         logger.info(
             "Carga de datos OK: %s categorías, %s preguntas, %s respuestas",
             log.categorias_procesadas,
-            log.preguntas_procesadas,
+    log.preguntas_procesadas = (log.preguntas_procesadas if log.preguntas_procesadas is not None else 0) + 1
             log.respuestas_procesadas,
         )
     except Exception as exc:  # noqa: BLE001 — se registra y se relanza controlado
