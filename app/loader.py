@@ -96,7 +96,11 @@ def _upsert_pregunta(db: Session, categoria: Category, q_data: dict) -> Question
 def cargar_datos(db: Session) -> LoadLog:
     """Punto de entrada único: lee todo data/ y sincroniza la base de datos."""
     data_dir = Path(settings.data_dir)
-    log = LoadLog()
+    # Los contadores se inicializan en 0 explicitamente: el default=0 del
+    # modelo solo se aplica al insertar en la base de datos (flush/commit),
+    # no al construir el objeto -- sin esto, el primer "+= 1" revienta con
+    # TypeError porque el valor en memoria sigue siendo None.
+    log = LoadLog(categorias_procesadas=0, preguntas_procesadas=0, respuestas_procesadas=0)
 
     try:
         categorias_raw = _leer_categorias(data_dir)
