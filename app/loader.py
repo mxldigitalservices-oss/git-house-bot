@@ -106,7 +106,7 @@ def cargar_datos(db: Session) -> LoadLog:
             categoria = _upsert_categoria(db, cat_data)
             db.flush()  # asegura categoria.id antes de asociarle preguntas
             categorias_por_slug[categoria.slug] = categoria
-            log.categorias_procesadas = (log.categorias_procesadas or 0) + 1
+            log.categorias_procesadas += 1
 
         bloques_qna = _leer_archivos_qna(data_dir)
         for bloque in bloques_qna:
@@ -119,14 +119,14 @@ def cargar_datos(db: Session) -> LoadLog:
                 )
             for q_data in bloque.get("preguntas", []):
                 pregunta = _upsert_pregunta(db, categoria, q_data)
-    log.preguntas_procesadas = (log.preguntas_procesadas if log.preguntas_procesadas is not None else 0) + 1
+                log.preguntas_procesadas += 1
                 log.respuestas_procesadas += len(q_data.get("respuestas", []))
 
         db.commit()
         logger.info(
             "Carga de datos OK: %s categorías, %s preguntas, %s respuestas",
             log.categorias_procesadas,
-    log.preguntas_procesadas = (log.preguntas_procesadas if log.preguntas_procesadas is not None else 0) + 1
+            log.preguntas_procesadas,
             log.respuestas_procesadas,
         )
     except Exception as exc:  # noqa: BLE001 — se registra y se relanza controlado
